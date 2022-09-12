@@ -1,0 +1,141 @@
+#include "stdio.h"
+#include "conio.h"
+#include "stdlib.h"
+
+
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* top = NULL;
+
+void Push(int x) {
+    struct Node* temp = (struct Node*)malloc(sizeof( struct Node*));
+    temp->data = x;
+    temp->next = top;
+    top = temp;
+}
+
+void Pop(){
+    struct Node *temp;
+    if(top == NULL){
+        printf("***************Stack is empty!***************");
+    return;
+    }
+    temp = top;
+    top = top->next;
+    free(temp);
+}
+
+
+
+int isEmpty(){
+    if(top == NULL)
+        return 1;
+    else
+        return 0;
+}
+
+int Print(){
+    struct Node* temp = top;
+    if(isEmpty == 1){
+        printf("Stack is Empty");
+        return;
+    }
+
+    printf("Top| ");
+    while(temp != NULL){
+        printf("%d > ",temp->data);
+        temp = temp->next;
+    }
+    printf("|End");
+}
+
+int Search(int n){
+    struct Node* temp = (struct Node*)malloc(sizeof( struct Node*));
+    if (top == NULL){
+        printf("Your stack is empty!\n");
+        return;
+    }
+    else {
+        temp=top;
+        while (n != temp->data){
+           printf("*");
+            temp=top->next;
+
+            if (temp==NULL){
+            printf ("\nYour data is not in the stack!\n");
+            return;
+            }
+
+    }
+        if (n == temp->data){
+            printf ("\nYour data is in the stack!");
+            printf("\n\nThe stars represent the position of your data in the stack.\n");
+            printf("No star = Your data is in the first place of the stack.\nOne star = Second place of the stack.\nTwo stars = Third place of the stack.\n\nAnd so on......");
+    }
+
+    }
+
+    }
+
+int main(){
+
+int choice=0;
+int num=0;
+int n=0;
+
+
+printf("***************Welcome***************\n\n");
+
+
+while (choice != 5){
+
+    printf("\n\nPlease enter your choice!\n");
+    printf("1. Push\n");
+    printf("2. Pop\n");
+    printf("3. Search\n");
+    printf("4. Print stack\n");
+    printf("5. Exit\n");
+    printf("Your choice : ");
+    scanf("%d",&choice);
+
+    if(choice<1 || choice>5){
+        printf("\n\nInvalid Input!");
+}
+    else if (choice == 1){
+        printf("\n\nEnter a data to push : ");
+        scanf("%d",&num);
+
+        Push(num);
+        printf("\nIt's pushed!\n\n");
+
+        }
+
+    else if (choice == 2){
+        Pop();
+        printf("\nIt's popped!\n\n");
+    }
+
+    else if (choice == 3){
+        printf("Enter data(number) to search : ");
+        scanf("%d",&n);
+        Search(n);
+
+    }
+
+    else if (choice == 4){
+        printf ("\n\nStack data : \n");
+        Print();
+    }
+
+    else if (choice <1 || choice >5){
+        printf("Invalid input!");
+    }
+}
+
+return 0;
+
+}
