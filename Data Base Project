@@ -1,0 +1,269 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <windows.h>
+
+COORD coord = {0,0};
+void gotoxy(int x,int y)
+{
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
+}
+
+
+struct Data
+{
+    int id;
+    char username[40];
+    char password[40];
+    int amount;
+    int age;
+
+} ;
+
+
+int main(){
+
+    struct Data d;
+
+    FILE *fp, *ft;
+
+    char name[40];
+    char pass[40];
+    long int recsize;
+    char choice;
+    char another;
+    int search;
+    int id;
+    int key=0;
+
+
+
+    fp = fopen("info.txt","rb+");
+    if(fp == NULL)
+    {
+        fp = fopen("info.txt","wb+");
+        if(fp == NULL)
+        {
+            printf("Connot open file");
+            exit(1);
+        }
+    }
+    recsize = sizeof(d);
+
+
+    while (1){
+
+        system("cls");
+        gotoxy(30,10);
+        printf("1. Add Data");
+        gotoxy(30,12);
+        printf("2. Display Data");
+        gotoxy(30,14);
+        printf("3. Search Data");
+        gotoxy(30,16);
+        printf("4. Update Data");
+        gotoxy(30,18);
+        printf("5. Delete Data");
+        gotoxy(30,20);
+        printf("6. Exit");
+        gotoxy(30,22);
+        printf("Your Choice: ");
+        fflush(stdin);
+        choice  = getche();
+         switch(choice){
+
+         case '1':
+            system("cls");
+            fseek(fp,0,SEEK_END);
+            another='y';
+
+             while(another == 'y')
+            {
+                printf("\nEnter id: ");
+                scanf("%d",&d.id);
+                printf("\nEnter username: ");
+                scanf("%s",d.username);
+                printf("\nEnter password: ");
+                scanf("%s", &d.password);
+                printf("\nEnter amount: ");
+                scanf("%d", &d.amount);
+                printf("\nEnter age: ");
+                scanf("%d", &d.age);
+
+                fwrite(&d,recsize,1,fp);
+
+                printf("\nAdd another record(y/n) ");
+                fflush(stdin);
+                another = getche();
+            }
+            break;
+
+        case '2':
+            system("cls");
+            rewind(fp);
+            while(fread(&d,recsize,1,fp)==1)
+            {
+                printf("\n%d %s %s %d %d",d.id, d.username, d.password, d.amount, d.age);
+            }
+            getch();
+            break;
+
+        case '3':
+            system("cls");
+            another = 'y';
+            while (another == 'y')
+                {
+                    key=0;
+                    printf("\n\n1. To search by id\n\n2. To search by username\n");
+                    scanf("%d",&search);
+                    if (search != 1 && search != 2){
+                        printf("\nInvalid input!");
+                        break;
+                    }
+                    else if (search == 1){
+                        printf("\nEnter id: ");
+                        scanf("%d",&id);
+                        rewind(fp);
+                        while (fread(&d,recsize,1,fp)==1)
+                            {
+                                if (d.id == id){
+                                    printf("\nId: %d\nUsername: %s\nPassword: %s\nAmount: %d\nAge: %d\n\n",d.id, d.username, d.password, d.amount, d.age);
+                                    key=1;
+
+                                    }
+                            }
+                            if (key == 0){
+                                printf("\nYour id is not in the list!\n");
+                            }
+
+                            printf("\nSearch another data(y/n)");
+                            fflush(stdin);
+                            another = getche();
+                        }
+                    else if (search == 2){
+                        printf("\nEnter username: ");
+                        scanf("%s",name);
+                        rewind(fp);
+                        while (fread(&d,recsize,1,fp)==1)
+                            {
+                                if (strcmp(d.username,name) == 0){
+                                    printf("\nId: %d\nUsername: %s\nPassword: %s\nAmount: %d\nAge: %d\n\n",d.id, d.username, d.password, d.amount, d.age);
+                                    key=1;
+
+                                    }
+                            }
+                            if (key == 0){
+                                printf("\nYour username is not in the list!\n");
+                            }
+
+                            printf("\nSearch another data(y/n)");
+                            fflush(stdin);
+                            another = getche();
+                    }
+                    
+
+            } break;
+
+
+        case '4':
+            system("cls");
+            another = 'y';
+            while(another == 'y')
+            {
+                key=0;
+                printf("\n\nPlease Fill The Requirements to Update\n\n");
+                printf("Enter the username: ");
+                scanf("%s", name);
+                printf("\nEnter the password: ");
+                scanf("%s", pass);
+
+                rewind(fp);
+                while(fread(&d,recsize,1,fp)==1)
+                {
+                    if(strcmp(d.username,name) == 0)
+                    {
+                        if (strcmp(d.password,pass) == 0){
+
+                            printf("\nEnter new id: ");
+                            scanf("%d",&d.id);
+                            printf("\nEnter new username: ");
+                            scanf("%s",d.username);
+                            printf("\nEnter new password: ");
+                            scanf("%s",d.password);
+                            printf("\nEnter new amount: ");
+                            scanf("%d",&d.amount);
+                            printf("\nEnter new age: ");
+                            scanf("%d",&d.age);
+                            key=1;
+                            fseek(fp,-recsize,SEEK_CUR);
+                            fwrite(&d,recsize,1,fp);
+                            break;
+                        }
+
+                    }
+                }
+                if (key==0){
+                    printf("\nInvalid 'Username' or 'Password'!\n\n");
+                }
+                printf("\nUpdate another data(y/n)");
+                fflush(stdin);
+                another = getche();
+            }
+            break;
+
+        case '5':
+            system("cls");
+            another = 'y';
+            while(another == 'y')
+            {
+                key=0;
+                printf("\n\nFill The Requirements to Delete\n\n");
+                printf("Enter username: ");
+                scanf("%s",name);
+                printf("\nEnter password: ");
+                scanf("%s",pass);
+                ft = fopen("Tempo.txt","wb");
+                rewind(fp);
+                while(fread(&d,recsize,1,fp) == 1)
+                {
+                    if(strcmp(d.username,name) != 0 && strcmp(d.password,pass) != 0)
+                    {
+                                fwrite(&d,recsize,1,ft);
+
+                    }
+                    else if (strcmp(d.username,name) == 0 && strcmp(d.password,pass) == 0){
+                        key=1;
+                    }
+                }
+                if (key == 0){
+                    printf("\nCannot delete data!\nInvalid username or password.\n\n");
+                }
+                else if (key == 1){
+                    printf("\nSucceeded in deleting data!\n");
+                }
+                fclose(fp);
+                fclose(ft);
+                remove("info.txt");
+                rename("Tempo.txt","info.txt");
+                fp = fopen("info.txt", "rb+");
+                printf("\nDelete another record(y/n)");
+                fflush(stdin);
+                another = getche();
+            }
+            break;
+
+        case '6':
+            fclose(fp);
+            exit(0);
+
+
+         }
+
+    }
+
+
+return 0;
+}
