@@ -1,0 +1,254 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <conio.h>
+#include <iomanip>
+
+using namespace std;
+int main()
+{
+    FILE *fp, *ft;
+    char another, choice;
+
+    struct Data
+    {
+        int id;
+        string username, password;
+        int amount;
+    };
+
+    struct Data d;
+    string name, pass;
+    long int recsize;
+    int key;
+    int ss;
+    int id;
+
+    fp=fopen("userss.txt","rb+");
+
+    if (fp == NULL)
+    {
+        fp = fopen("userss.txt","wb+");
+
+        if (fp==NULL)
+        {
+            puts("Cannot open file");
+            return 0;
+        }
+    }
+
+
+    recsize = sizeof(d);
+
+    while(1)
+    {
+        system("cls");
+
+        cout << "\t\t====== STUDENT DATABASE MANAGEMENT SYSTEM ======";
+        cout <<"\n\n                                          ";
+        cout << "\n\n";
+        cout << "\n \t\t\t 1. Add    Data";
+        cout << "\n \t\t\t 2. List   Data";
+        cout << "\n \t\t\t 3. Search Data";
+        cout << "\n \t\t\t 4. Modify Data";
+        cout << "\n \t\t\t 5. Delete Data";
+        cout << "\n \t\t\t 6. Exit";
+        cout << "\n\n";
+        cout << "\t\t\t Select Your Choice :=> ";
+        fflush(stdin);
+        choice = getche();
+        switch(choice)
+        {
+        case '1' :
+            fseek(fp,0,SEEK_END);
+            another ='Y';
+            while(another == 'Y' || another == 'y')
+            {
+                system("cls");
+                cout << "Enter id : ";
+                cin >> d.id;
+                cout << "Enter username : ";
+                cin >> d.username;
+                cout << "Enter password    : ";
+                cin >> d.password;
+                cout << "Enter amount   : ";
+                cin >> d.amount;
+                fwrite(&d,recsize,1,fp);
+                cout << "\n Add Another Data (Y/N) ";
+                fflush(stdin);
+                another = getchar();
+            }
+            break;
+        case '2':
+            system("cls");
+            rewind(fp);
+            cout << "=== View the Data in the Database ===";
+            cout << "\n";
+            while (fread(&d,recsize,1,fp) == 1)
+            {
+                cout << "\n";
+                cout <<"\n" << d.id << setw(10)  << d.username;
+                cout << "\n";
+                cout <<"\n" <<d.password <<  setw(8)  << d.amount;
+            }
+            cout << "\n\n";
+            system("pause");
+            break;
+
+        case '3' :
+            system ("cls");
+            another = 'Y';
+            while  (another == 'Y' || another == 'y'){
+                key=0;
+                cout << "\n\n1. To search by id\n\n2. To search by username\n";
+                cin >> ss;
+
+                if (ss != 1 && ss != 2){
+                    cout << "\n\nInvalid input!";
+                    break;
+                }
+                else if (ss == 1){
+                    cout<< "\n\nEnter id : ";
+                    cin >> id;
+                    rewind(fp);
+                   while (fread(&d,recsize,1,fp)==1){
+                     if ( d.id == id){
+                        cout << "\nId : ";
+                        cout << d.id << endl;
+                        cout << "\nUsername : ";
+                        cout << d.username << endl;
+                        cout << "\nPassword : ";
+                        cout << d.password  << endl;
+                        cout << "\nAmount : ";
+                        cout << d.amount << endl;
+                        key=1;
+                     }
+                   }
+                   if (key==0){
+                    cout<<  "\nYour id is not in the list!";
+                   }
+                    cout << "\nSearch another data(y/n)";
+                    fflush(stdin);
+                    another = getche();
+                }
+                else if (ss == 2){
+                    cout << "\n\nEnter username : ";
+                    cin>> name;
+                    rewind(fp);
+                    while (fread(&d,recsize,1,fp)==1){
+                        if (d.username== name){
+                        cout << "\nId : ";
+                        cout << d.id << endl;
+                        cout << "\nUsername : ";
+                        cout << d.username << endl;
+                        cout << "\nPassword : ";
+                        cout << d.password  << endl;
+                        cout << "\nAmount : ";
+                        cout << d.amount << endl;
+                            key = 1;
+                        }
+                    }
+                    if (key==0){
+                    cout<<  "\nYour username is not in the list!";
+                   }
+                    cout << "\nSearch another data(y/n)";
+                    fflush(stdin);
+                    another = getche();
+                }
+            } break;
+
+        case '4' :
+            system("cls");
+            another = 'Y';
+            while (another == 'Y'|| another == 'y')
+            {
+                key=0;
+                cout << "\n\n Please Fill The Requirements To Modify.";
+                cout << "\n\n Enter the username : ";
+                cin >> name;
+                cout << "\n Enter the password : ";
+                cin >> pass;
+
+                rewind(fp);
+                while (fread(&d,recsize,1,fp) == 1)
+                {
+                    if (d.username == name)
+                    {
+                        if (d.password == pass){
+
+                         cout << "Enter new id : ";
+                         cin >> d.id;
+                         cout << "Enter new username : ";
+                         cin >> d.username;
+                         cout << "Enter new password : ";
+                         cin >> d.password;
+                         cout << "Enter new amount    : ";
+                         cin >> d.amount;
+                         key=1;
+
+                        fseek(fp, - recsize, SEEK_CUR);
+                        fwrite(&d,recsize,1,fp);
+                        break;
+                        }
+
+                    }
+                    else
+                        cout<<"record not found";
+                }
+                if (key == 0){
+                    cout << "\nInvalid 'username' or 'password' ! ";
+                }
+
+                cout << "\n Modify Another Data (Y/N) ";
+                fflush(stdin);
+                another = getchar();
+            }
+            break;
+
+
+        case '5':
+            system("cls");
+            another = 'Y';
+            while (another == 'Y'|| another == 'y')
+            {
+                cout << "\n Enter username : ";
+                cin >> name;
+
+                ft = fopen("tempoo.dat", "wb");
+
+                rewind(fp);
+                while (fread (&d, recsize,1,fp) == 1)
+
+                    if (d.username != name)
+                    {
+                        fwrite(&d,recsize,1,ft);
+                    }
+                fclose(fp);
+                fclose(ft);
+                remove("userss.txt");
+                rename("temp00.dat","userss.txt");
+
+                fp=fopen("userss.txt","rb+");
+
+                cout << "\n Delete Another Record (Y/N) ";
+                fflush(stdin);
+                another = getchar();
+            }
+
+            break;
+
+        case '6':
+            fclose(fp);
+            cout << "\n\n";
+            cout << "\t\t     THANK YOU FOR USING THIS SOFTWARE";
+            cout << "\n\n";
+            exit(0);
+        }
+    }
+
+
+    system("pause");
+    return 0;
+}
+
