@@ -1,0 +1,545 @@
+// Created by Nay Chi
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <conio.h>
+#include <iomanip>
+using namespace std;
+
+
+class Student{
+public:
+    int locate=0;
+    string stduname[100];
+    int id[100];
+    char myan[100];
+    char eng[100];
+    char maths[100];
+    char chem[100];
+    char phys[100];
+    char bio[100];
+    char choice;
+
+Student (){
+        cout<<"Welcome from our Saving Students' Information Center!"<<endl;
+        }
+
+        int AddData();
+        int MainMenu();
+        int DisplayData();
+        int SearchData();
+        int ModifyData();
+
+};
+
+
+
+int Student::AddData(){
+    char another='Y';
+    int idd;
+    string name;
+    int mmyan;
+    int eeng;
+    int mmaths;
+    int cchem;
+    int pphys;
+    int bbio;
+    while (another=='Y' || another=='y'){
+        system ("cls");
+        cout<<"Please fill the requirements!"<<endl;
+        cout<<"Student id : ";
+        cin>>idd;
+        for (int i=0; i<=locate; i++){
+            if (id[locate]==idd){
+                cout<<"This id is already taken."<<endl<<"Please try to use another id."<<endl;
+                break;
+            }
+        }
+        id[locate]=idd;
+        cout<<"Student name : ";
+        cin>>stduname[locate];
+        cout<<"Myanmar mark : ";
+        cin>>mmyan;
+if (mmyan<0 || mmyan>100){
+    cout<<"Invalid input"<<endl;
+    MainMenu();
+}
+else if (mmyan<40 ){
+        cout<<"Grade : D"<<endl;
+        myan[locate]='D';
+    }
+    else if (mmyan<70){
+        cout<<"Grade : C"<<endl;
+        myan[locate]='C';
+    }
+    else if (mmyan<80){
+        cout<<"Grade : B"<<endl;
+        myan[locate]='B';
+    }
+
+    else if (mmyan<101){
+        cout<<"Grade : A"<<endl;
+        myan[locate]='A';
+
+    }
+
+
+        cout<<"English mark : ";
+        cin>>eeng;
+if (eeng<0 || eeng>100){
+    cout<<"Invalid input"<<endl;
+    MainMenu();
+}
+else if (eeng<40 ){
+        cout<<"Grade : D"<<endl;
+        eng[locate]='D';
+    }
+    else if (eeng<70){
+        cout<<"Grade : C"<<endl;
+        eng[locate]='C';
+    }
+    else if (eeng<80){
+        cout<<"Grade : B"<<endl;
+        eng[locate]='B';
+    }
+
+    else if (eeng<101){
+        cout<<"Grade : A"<<endl;
+        eng[locate]='A';
+
+    }              cout<<"Mathematics mark : ";
+        cin>>mmaths;
+if (mmaths<0 || mmaths>100){
+    cout<<"Invalid input"<<endl;
+    MainMenu();
+}
+else if (mmaths<40 ){
+        cout<<"Grade : D"<<endl;
+        maths[locate]='D';
+    }
+    else if (mmaths<70){
+        cout<<"Grade : C"<<endl;
+        maths[locate]='C';
+    }
+    else if (mmaths<80){
+        cout<<"Grade : B"<<endl;
+        maths[locate]='B';
+    }
+
+    else if (mmaths<101){
+        cout<<"Grade : A"<<endl;
+        maths[locate]='A';
+
+    }
+        cout<<"Chemistry mark : ";
+        cin>>cchem;
+if (cchem<0 || cchem>100){
+    cout<<"Invalid input"<<endl;
+    MainMenu();
+}
+else if (cchem<40 ){
+        cout<<"Grade : D"<<endl;
+        chem[locate]='D';
+    }
+    else if (cchem<70){
+        cout<<"Grade : C"<<endl;
+        chem[locate]='C';
+    }
+    else if (cchem<80){
+        cout<<"Grade : B"<<endl;
+        chem[locate]='B';
+    }
+
+    else if (cchem<101){
+        cout<<"Grade : A"<<endl;
+        chem[locate]='A';
+
+    }              cout<<"Physics mark : ";
+        cin>>pphys;
+if (pphys<0 || pphys>100){
+    cout<<"Invalid input"<<endl;
+    MainMenu();
+}
+else if (pphys<40){
+        cout<<"Grade : D"<<endl;
+        phys[locate]='D';
+    }
+    else if (pphys<70){
+        cout<<"Grade : C"<<endl;
+        phys[locate]='C';
+    }
+    else if (pphys<80){
+        cout<<"Grade : B"<<endl;
+        phys[locate]='B';
+    }
+
+    else if (pphys<101){
+        cout<<"Grade : A"<<endl;
+        phys[locate]='A';
+
+    }              cout<<"Biology mark : ";
+        cin>>bbio;
+if (bbio<0 || bbio>100){
+    cout<<"Invalid input"<<endl;
+    MainMenu();
+}
+else if (bbio<40){
+        cout<<"Grade : D"<<endl;
+        bio[locate]='D';
+    }
+    else if (bbio<70){
+        cout<<"Grade : C"<<endl;
+        bio[locate]='C';
+    }
+    else if (bbio<80){
+        cout<<"Grade : B"<<endl;
+        bio[locate]='B';
+    }
+
+    else if (bbio<101){
+        cout<<"Grade : A"<<endl;
+        bio[locate]='A';
+
+    }
+
+
+
+        cout<<"\n Adding Student's data done!"<<endl;
+        locate++;
+        cout<<"Add another student's data (Y/N)";
+        fflush(stdin);
+        another = getchar();
+
+    }
+}
+
+int Student::DisplayData(){
+    int i=0;
+    system("cls");
+    cout<<"===== View the students' information ====="<<endl;
+    cout<<"\n";
+    cout<<"Id"<<setw(10)<<"Student name"<<setw(10)<<"Myanmar"<<setw(10)<<"English"<<setw(10)<<"Maths"<<setw(10)<<"Chemistry"<<setw(10)<<"Physics"<<setw(10)<<"Biology"<<endl;
+    cout<<"\n";
+    for(i=0; i<locate ; i++){
+        cout<<""<<id[i];
+        cout<<setw(10);
+        cout<<""<<stduname[i];
+        cout<<setw(10);
+        cout<<""<<myan[i];
+        cout<<setw(10);
+        cout<<""<<eng[i];
+        cout<<setw(10);
+        cout<<""<<maths[i];
+        cout<<setw(10);
+        cout<<""<<chem[i];
+        cout<<setw(10);
+        cout<<""<<phys[i];
+        cout<<setw(10);
+        cout<<""<<bio[i]<<endl;
+
+    }
+    cout<<"\n";
+        system("pause");
+
+
+
+}
+
+int Student::SearchData(){
+    char another='Y';
+
+
+    while (another=='Y' || another=='y'){
+           int key=0;
+           int idd=0;
+        system("cls");
+        cout<<"Enter id to search : ";
+        cin>>idd;
+        for (int i=0; i<locate; i++){
+            if (idd==id[i]){
+                cout<<"Id : "<<id[i]<<endl;
+                cout<<"Student name : "<<stduname[i]<<endl;
+                cout<<"Myanmar : "<<myan[i]<<endl;
+                cout<<"English : "<<eng[i]<<endl;
+                cout<<"Mathematics : "<<maths[i]<<endl;
+                cout<<"Chemistry : "<<chem[i]<<endl;
+                cout<<"Physics : "<<phys[i]<<endl;
+                cout<<"Biology : "<<bio[i]<<endl;
+                key=1;
+                }
+        }
+        if (key==0){
+            cout<<"Can't find the student's data of your id!"<<endl;
+        }
+        else if(key==1){cout<<"\n Searching Student's data done!"<<endl;}
+
+        cout<<"Search another student's data (Y/N)";
+        fflush(stdin);
+        another = getchar();
+    }
+
+
+
+
+
+
+}
+
+int Student::ModifyData(){
+    int idd;
+    int i=0;
+    char another='Y';
+
+    while (another=='Y' || another =='y'){
+        system("cls");
+        int mmyan=0;
+        int eeng=0;
+        int mmaths=0;
+        int cchem=0;
+        int pphys=0;
+        int bbio=0;
+        int idd=0;
+    int key=0;
+            cout<<"Enter id to modify : ";
+            cin>>idd;
+            for (i=0; i<locate; i++){
+                if (idd==id[i]){
+                    cout<<"Fill the requirements to modify.\n"<<endl;
+                    cout<<"New student name : ";
+                    cin>>stduname[i];
+                    cout<<"New Myanmar mark : ";
+        cin>>mmyan;
+if (mmyan<0 || mmyan>100){
+    cout<<"Invalid input"<<endl;
+    ModifyData();
+}
+else if (mmyan<40 ){
+        cout<<"Grade : D"<<endl;
+        myan[i]='D';
+    }
+    else if (mmyan<70){
+        cout<<"Grade : C"<<endl;
+        myan[i]='C';
+    }
+    else if (mmyan<80){
+        cout<<"Grade : B"<<endl;
+        myan[i]='B';
+    }
+
+    else if (mmyan<101){
+        cout<<"Grade : A"<<endl;
+        myan[i]='A';
+
+    }
+
+
+        cout<<"New English mark : ";
+        cin>>eeng;
+if (eeng<0 || eeng>100){
+    cout<<"Invalid input"<<endl;
+    ModifyData();
+}
+else if (eeng<40 ){
+        cout<<"Grade : D"<<endl;
+        eng[i]='D';
+    }
+    else if (eeng<70){
+        cout<<"Grade : C"<<endl;
+        eng[i]='C';
+    }
+    else if (eeng<80){
+        cout<<"Grade : B"<<endl;
+        eng[i]='B';
+    }
+
+    else if (eeng<101){
+        cout<<"Grade : A"<<endl;
+        eng[i]='A';
+
+    }              cout<<"New Mathematics mark : ";
+        cin>>mmaths;
+if (mmaths<0 || mmaths>100){
+    cout<<"Invalid input"<<endl;
+    ModifyData();
+}
+else if (mmaths<40 ){
+        cout<<"Grade : D"<<endl;
+        maths[i]='D';
+    }
+    else if (mmaths<70){
+        cout<<"Grade : C"<<endl;
+        maths[i]='C';
+    }
+    else if (mmaths<80){
+        cout<<"Grade : B"<<endl;
+        maths[i]='B';
+    }
+
+    else if (mmaths<101){
+        cout<<"Grade : A"<<endl;
+        maths[i]='A';
+
+    }
+        cout<<"New Chemistry mark : ";
+        cin>>cchem;
+if (cchem<0 || cchem>100){
+    cout<<"Invalid input"<<endl;
+    ModifyData();
+}
+else if (cchem<40 ){
+        cout<<"Grade : D"<<endl;
+        chem[i]='D';
+    }
+    else if (cchem<70){
+        cout<<"Grade : C"<<endl;
+        chem[i]='C';
+    }
+    else if (cchem<80){
+        cout<<"Grade : B"<<endl;
+        chem[i]='B';
+    }
+
+    else if (cchem<101){
+        cout<<"Grade : A"<<endl;
+        chem[i]='A';
+
+    }              cout<<"New Physics mark : ";
+        cin>>pphys;
+if (pphys<0 || pphys>100){
+    cout<<"Invalid input"<<endl;
+    ModifyData();
+}
+else if (pphys<40){
+        cout<<"Grade : D"<<endl;
+        phys[i]='D';
+    }
+    else if (pphys<70){
+        cout<<"Grade : C"<<endl;
+        phys[i]='C';
+    }
+    else if (pphys<80){
+        cout<<"Grade : B"<<endl;
+        phys[i]='B';
+    }
+
+    else if (pphys<101){
+        cout<<"Grade : A"<<endl;
+        phys[i]='A';
+
+    }              cout<<"New Biology mark : ";
+        cin>>bbio;
+if (bbio<0 || bbio>100){
+    cout<<"Invalid input"<<endl;
+    ModifyData();
+}
+else if (bbio<40){
+        cout<<"Grade : D"<<endl;
+        bio[i]='D';
+    }
+    else if (bbio<70){
+        cout<<"Grade : C"<<endl;
+        bio[i]='C';
+    }
+    else if (bbio<80){
+        cout<<"Grade : B"<<endl;
+        bio[i]='B';
+    }
+
+    else if (bbio<101){
+        cout<<"Grade : A"<<endl;
+        bio[i]='A';
+
+    }
+               key=1; }
+            }
+
+        if (key==0){
+            cout<<"Can't find the student's data with this id \n"<<endl;
+        }
+        if (key==1){
+            cout<<"Modifying student's data done!"<<endl;
+        }
+        cout<<"Modify another student's data (Y/N)";
+        fflush(stdin);
+        another = getchar();
+    }
+
+
+
+
+
+
+}
+
+int Student::MainMenu(){
+    char choice;
+    while (1){
+        system("cls");
+
+        cout << "\t\t====== SAVING STUDENTS' INFORMATION CENTER ======";
+        cout <<"\n\n                                          ";
+        cout << "\n\n";
+        cout << "\n \t\t\t 1. Add     Data";
+        cout << "\n \t\t\t 2. Display Data";
+        cout << "\n \t\t\t 3. Search  Data";
+        cout << "\n \t\t\t 4. Modify  Data";
+        cout << "\n \t\t\t 5. Exit";
+        cout << "\n\n";
+        cout << "\t\t\t Select Your Choice :=> ";
+        fflush(stdin);
+        choice = getchar();
+        switch(choice)
+        {
+        case '1':
+            AddData();
+            break;
+
+        case '2':
+            DisplayData();
+            break;
+
+        case '3':
+            SearchData();
+            break;
+
+        case '4':
+            ModifyData();
+            break;
+            
+        case '5':
+            exit(1);
+            
+        default:
+            cout<<"Invalid input!"<<endl;
+            MainMenu();
+
+
+        }
+
+    }
+
+
+
+
+
+}
+
+int main(){
+    Student Obj;
+     int ex=Obj.MainMenu();
+    if(ex == 0){
+        exit(1);
+    }
+
+
+
+
+
+
+
+
+
+
+}
