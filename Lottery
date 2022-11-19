@@ -1,0 +1,268 @@
+///
+/// Created by Nay Chi on 11.11.2022'
+/// Lottery
+
+#include<iostream>
+#include<fstream>
+#include<conio.h>
+#include<string.h>
+using namespace std;
+
+class Lottery{
+
+public:
+    int num;
+    string name;
+    string nameinfile;
+    int oo=0;
+    char uu;
+    int gg;
+    int amount;
+    int ii=0;
+    int res=0;
+
+    Lottery (){
+    cout<< "Welcome! "<<endl;
+    }
+
+    int Choosing();
+    int Info();
+    int Newname();
+    int Oldname();
+    };
+
+int Check(string nname){
+    int oo=0;
+
+    fstream Ffile;
+
+  Ffile.open("Name.txt", ios::in);
+
+  string nameinfile;
+
+  while(1){
+        getline(Ffile,nameinfile);
+
+            int res=nname.compare(nameinfile);
+            if (res==0){
+                oo=1;
+            }
+            if(Ffile.eof()){
+                break;
+            }}
+
+        if (oo==0){
+                return 1;
+        }
+
+
+        else if(oo=1){
+            return 0;
+}
+
+Ffile.close();
+        }
+
+int Lottery::Newname(){
+
+    name="";
+    cout<<"Enter your name"<<endl;
+    cin>>name;
+
+    if (Check(name)){
+
+    ofstream outfile;
+    ifstream infile;
+
+     infile.open("Name.txt");
+     outfile.open ("Name.txt",ios::app);
+   if(infile.is_open())
+      outfile<<"\n";
+      outfile<<name;
+      cout<<"Name has been appended to file"<<endl;
+      infile.close();
+      outfile.close();
+
+
+    Choosing();
+
+    }
+    else {
+        cout<<"This name is already taken!\nPlease enter a NEW NAME."<<endl;
+        Newname();
+            }
+}
+
+int Lottery::Oldname(){
+
+
+    cout<<"Enter your name"<<endl;
+    cin>>name;
+    if (Check(name)){
+        cout<<"The name is not in the list\nPress 1 to search again or\nPress 2 to create with a new name"<<endl;
+        cin>>gg;
+
+        if (gg==1){
+            Oldname();
+        }
+        else if (gg==2){
+            Newname();
+        }
+
+}
+    else{
+        //success logging in
+        //take him to his acc and Choosing
+
+        cout<<"found!"<<endl;
+        Choosing();
+    }
+
+}
+
+int Lottery::Info(){
+
+         cout<<"Have you ever used before (y/n) "<<endl;
+         cin>>uu;
+
+         if (uu=='y' || uu=='Y'){
+                Oldname();
+         }
+        else if(uu=='n' || uu=='N'){
+            Newname();
+        }
+
+
+
+}
+
+int Lottery::Choosing(){
+
+    int ch=0;
+    cout<<"Please enter a number from 100 up to 999.(*** Including 100 and 999 ***)"<<endl;
+    cin>>num;
+
+    if (num<100 || num>999){
+        cout<<"Your input number is not between 100 and 999."<<endl;
+        Choosing();
+    }
+
+    else if (num>=100 || num<=999){
+
+            int cc=0;
+            int nnum;
+            ifstream filein;
+            filein.open("Numbers.txt",ios::in);
+            if (filein.is_open()){
+                while (filein>>nnum){
+                    if (nnum==num){
+                        cc=1;
+                    }
+                }
+            }
+
+            filein.close();
+
+            if (cc==0){
+         ch=1;
+       ofstream fout;
+       ifstream fin;
+      fin.open("Numbers.txt");
+      fout.open ("Numbers.txt",ios::app);
+   if(fin.is_open()){
+      fout<<num;
+      fout<<"\n";
+
+      cout<<"Number has been appended to 'Numbers' file\n"<<endl;
+
+      fin.close();
+      fout.close();
+
+   } }
+   else if(cc==1){
+
+    cout<<"The number is already taken by someone.\nPlease choose another number"<<endl;
+    Choosing();
+   }
+
+   if (ch==1){
+      ofstream Nout;
+      ifstream Nin;
+      Nin.open(name+".txt");
+      Nout.open(name+".txt",ios::app);
+
+      if(Nin.is_open()){
+            int aamount[10];
+
+            char tt;
+        Nout<<num;
+        Nout<<" ";
+        cout<<"Number has been appended to 'Name.txt' file.\n"<<endl;
+
+        cout<<"How much will u pay for that number?"<<endl;
+
+        cin>>amount;
+        Nout<<amount;
+        Nout<<"\n";
+
+        aamount[ii]=amount;
+        ii++;
+
+        Nin.close();
+      Nout.close();
+
+      cout<<"Do you want to test your luck again?(y/n)"<<endl;
+      cin>>tt;
+      if (tt=='y' || tt=='Y'){
+        Choosing();
+      }
+      else if (tt=='n' || tt=='N'){
+            cout<<"That's your bill\n"<<endl;
+            cout<<"Numbers    Amount\n"<<endl;
+
+            string lineinfile;
+
+            ifstream fffile;
+            fffile.open(name+".txt",ios::in);
+            while(1){
+                getline(fffile,lineinfile);
+                cout<<"     ";
+                cout<<lineinfile<<endl;
+
+                if(fffile.eof()){
+                break;
+            }
+
+            }
+            for(int jj=0; jj< ii; jj++){
+                res=aamount[jj]+res;
+                cout<<res;
+
+            }
+
+        cout<<"\nTotal :: ";
+        cout<<res<<endl;
+        fffile.close();
+      }
+
+      }
+
+       }
+    }
+
+   }
+
+
+
+
+int main(){
+    Lottery Obj;
+    int ex=Obj.Info();
+    if(ex == 0){
+        exit(1);
+    }
+
+
+
+}
+
